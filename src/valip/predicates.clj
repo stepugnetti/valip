@@ -2,7 +2,8 @@
   "Predicates useful for validating input strings, such as ones from HTML forms.
 All predicates in this namespace are considered portable between different
 Clojure implementations."
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [cljs.reader :refer [read-string]]))
 
 (defn present?
   "Returns false if x is nil or blank, true otherwise."
