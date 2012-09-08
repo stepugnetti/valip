@@ -1,12 +1,11 @@
 (ns valip.test.core
-  (:use valip.core :reload)
+  (:use valip.core)
   (:use clojure.test))
 
 (deftest validation-on-test
-  (let [p? (fn [x] {:pre [(> x 0)]} false)
+  (let [p? (fn [x] false)
         v  (validation-on :x p? "error")]
-    (is (= (v {:x 1}) {:x ["error"]}))
-    (is (nil? (v {:x 0})))))
+    (is (= (v {:x 1}) {:x ["error"]}))))
 
 (deftest validate-test
   (is (= (validate {:x 17}

@@ -4,15 +4,12 @@
 (defn validation-on
   "Performs a validation on a key in a map using the supplied predicate
   function. A {key [error]} map is returned if the predicate returns false;
-  nil is returned if the predicate returns true, or if the supplied value does
-  not match the predicates preconditions (i.e. throws an AssertionError)."
+  nil is returned if the predicate returns true."
   [key pred? error]
   (fn [value-map]
     (let [value (value-map key)]
-      (try
-        (if-not (pred? value)
-          {key [error]})
-        (catch AssertionError _)))))
+      (if-not (pred? value)
+        {key [error]}))))
 
 (defn merge-errors
   "Merge error maps returned by from the validation-on function."
