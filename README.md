@@ -17,7 +17,7 @@ between this and that are significant:
 
 Add the following dependency to your `project.clj` file:
 
-    [com.cemerick/valip "0.3.0"]
+    [com.cemerick/valip "0.3.1"]
 
 # Usage
 
