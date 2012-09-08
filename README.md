@@ -3,11 +3,21 @@
 Valip is a validation library for Clojure. It is primarily designed to validate
 keyword-string maps, such as one might get from a HTML form.
 
+**This is an experimental fork of [James
+Reeves](http://github.com/weavejester)'
+[valip](http://github.com/weavejester/valip) library.**  The differences
+between this and that are significant:
+
+1. I'm trying to make this fork as portable as possible between Clojure and
+   (JavaScript) ClojureScript.
+2. Since I'm breaking stuff anyway, I'm making all sorts of changes and
+   additions to the original predicates and such, hopefully all for the better.
+
 # Installation
 
 Add the following dependency to your `project.clj` file:
 
-    [valip "0.2.0"]
+    [com.cemerick/valip "0.3.0"]
 
 # Usage
 
@@ -55,4 +65,6 @@ For example:
 Valip has a number of useful predicates and functions that generate predicates.
 More of these useful predicates will be added as the library matures.
 
-You can find these predicates in the `valip.predicates` namespace.
+You can find portable predicates in the `valip.predicates` namespace.
+Platform-specifc predicates can be found in `valip.java.predicates` and
+`valip.js.predicates`, depending on your deployment target.
