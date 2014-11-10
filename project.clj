@@ -3,36 +3,36 @@
   :url "http://github.com/cemerick/valip"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-2371"]]
-  :plugins [[lein-cljsbuild "1.0.3"]
-            [com.keminglabs/cljx "0.4.0"]]
-  :hooks [leiningen.cljsbuild cljx.hooks]
+  :plugins [[com.keminglabs/cljx "0.4.0"]]
+  :hooks [cljx.hooks]
   :cljx {:builds [{:source-paths ["src/cljx"]
-                   :output-path "src/clj"
+                   :output-path "target/clj"
                    :rules :clj}
                   {:source-paths ["src/cljx"]
-                   :output-path "src/cljs"
+                   :output-path "target/cljs"
                    :rules :cljs}]}
-;;   :clean-paths [(for [i [0 1]] [:cljx :builds i :output-path])]
-  :source-paths ["src/clj" "src/cljs"]
-  :cljsbuild {:builds [{:source-paths ["src/clj" "src/cljs"]
-                        :compiler {:output-dir ".cljsbuild/valip"
-                                   :output-to "public/valip.js"
-                                   :optimizations :advanced
-                                   :pretty-print false}}]}
+  :source-paths ["target/clj" "src/clj" "target/cljs" "src/cljs"]
   :profiles {:dev {:dependencies [[com.cemerick/clojurescript.test "0.3.1"]]
-                   :plugins [[com.cemerick/clojurescript.test "0.3.1"]]
+                   :hooks [leiningen.cljsbuild]
+                   :plugins [[com.cemerick/clojurescript.test "0.3.1"]
+                             [lein-cljsbuild "1.0.3"]]
                    :cljx {:builds [{:source-paths ["test/cljx"]
-                                    :output-path "test/clj"
+                                    :output-path "target/test/clj"
                                     :rules :clj}
                                    {:source-paths ["test/cljx"]
-                                    :output-path "test/cljs"
+                                    :output-path "target/test/cljs"
                                     :rules :cljs}]}
-                   :test-paths ["test/clj"]
-                   :source-paths ["test/cljs" "test/clj"]
-                   :cljsbuild {:builds [{:source-paths ["test/cljs"]
-                                         :compiler {:source-paths ["test/cljs"]
+                   :test-paths ["test/clj" "target/test/clj"]
+                   :source-paths ["test/cljs" "target/test/cljs" "test/clj" "target/test/clj"]
+                   :cljsbuild {:builds [{:source-paths ["target/cljs"]
+                                         :compiler {:output-dir "target/classes"
+                                                    :output-to "target/classes/valip.js"
+                                                    :optimizations :advanced
+                                                    :pretty-print false}}
+                                        {:source-paths ["target/test/cljs"]
+                                         :compiler {:output-dir "target/test-classes"
+                                                    :output-to "target/test-classes/test_valip.js"
                                                     :optimization "whitespace"
-                                                    :output-dir ".cljsbuild/valip/test"
-                                                    :output-to "test/test_valip.js"}}]
+                                                    :pretty-print false}}]
 
-                               :test-commands {"unit-tests" ["phantomjs" :runner "test/test_valip.js"]}}}})
+                               :test-commands {"unit-tests" ["phantomjs" :runner "target/test-classes/test_valip.js"]}}}})
