@@ -5,13 +5,14 @@
                  [org.clojure/clojurescript "0.0-2371"]]
   :plugins [[lein-cljsbuild "1.0.3"]
             [com.keminglabs/cljx "0.4.0"]]
-  :hooks [leiningen.cljsbuild]
+  :hooks [leiningen.cljsbuild cljx.hooks]
   :cljx {:builds [{:source-paths ["src/cljx"]
                    :output-path "src/clj"
                    :rules :clj}
                   {:source-paths ["src/cljx"]
                    :output-path "src/cljs"
                    :rules :cljs}]}
+;;   :clean-paths [(for [i [0 1]] [:cljx :builds i :output-path])]
   :source-paths ["src/clj" "src/cljs"]
   :cljsbuild {:builds [{:source-paths ["src/clj" "src/cljs"]
                         :compiler {:output-dir ".cljsbuild/valip"
