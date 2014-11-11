@@ -15,7 +15,7 @@
   :profiles {:dev {:dependencies [[com.cemerick/clojurescript.test "0.3.1"]]
                    :hooks [leiningen.cljsbuild]
                    :plugins [[com.cemerick/clojurescript.test "0.3.1"]
-                             [lein-cljsbuild "1.0.3"]]
+                             [lein-cljsbuild "1.0.4-SNAPSHOT"]]
                    :cljx {:builds [{:source-paths ["test/cljx"]
                                     :output-path "target/test/clj"
                                     :rules :clj}

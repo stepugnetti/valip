@@ -60,8 +60,12 @@ Clojure implementations."
   [s]
   (boolean (re-matches #"[A-Za-z0-9]+" s)))
 
-(defn- parse-number [x]
+#+clj(defn- parse-number [x]
   (if (and (string? x) (re-matches #"\s*[+-]?\d+(\.\d+M|M|N)?\s*" x))
+    (read-string x)))
+
+#+cljs(defn- parse-number [x]
+  (if (and (string? x) (re-matches #"\s*([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)(M|B)?.*" x))
     (read-string x)))
 
 (defn gt
