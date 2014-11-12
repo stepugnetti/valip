@@ -3,7 +3,17 @@
 All predicates in this namespace are considered portable between different
 Clojure implementations."
   (:require [clojure.string :as str]
-      #+cljs[cljs.reader :refer [read-string]]))
+            #+cljs
+            [cljs.reader :refer [read-string]]
+            #+cljs
+            [goog.Uri]
+            #+clj
+            [valip.predicates.def :refer [defpredicate]])
+  #+clj
+  (:import [java.net URI URISyntaxException]
+           java.util.Hashtable
+           javax.naming.NamingException
+           javax.naming.directory.InitialDirContext))
 
 (defn present?
   "Returns false if x is nil or blank, true otherwise."
@@ -60,13 +70,18 @@ Clojure implementations."
   [s]
   (boolean (re-matches #"[A-Za-z0-9]+" s)))
 
-#+clj(defn- parse-number [x]
+#+clj
+(defn- parse-number [x]
   (if (and (string? x) (re-matches #"\s*[+-]?\d+(\.\d+M|M|N)?\s*" x))
     (read-string x)))
 
-#+cljs(defn- parse-number [x]
+#+cljs
+(defn- parse-number [x]
   (if (and (string? x) (re-matches #"\s*([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)(M|B)?.*" x))
-    (read-string x)))
+    #_"This removes a strange warning from the compiler, see
+       http://dev.clojure.org/jira/browse/CLJS-885 "
+    (identity (read-string x))
+    ))
 
 (defn gt
   "Creates a predicate function for checking if a value is numerically greater
@@ -107,4 +122,44 @@ Clojure implementations."
   (fn [x]
     (if-let [x (parse-number x)]
       (and (>= x min) (<= x max)))))
+
+#+clj
+(defn url?
+  "Returns true if the string is a valid URL."
+  [s]
+  (try
+    (let [uri (URI. s)]
+      (and (seq (.getScheme uri))
+           (seq (.getSchemeSpecificPart uri))
+           (re-find #"//" s)
+           true))
+    (catch URISyntaxException _ false)))
+
+#+cljs
+(defn url?
+  [s]
+  (let [uri (-> s goog.Uri/parse)
+        scheme (.getScheme uri)]
+    (and (seq scheme)
+         (seq (-> uri .toString (.slice (.-length scheme) -1)))
+         (re-find #"//" s))))
+
+#+clj
+(defn- dns-lookup [^String hostname ^String type]
+  (let [params {"java.naming.factory.initial"
+                "com.sun.jndi.dns.DnsContextFactory"}]
+    (try
+      (.. (InitialDirContext. (Hashtable. params))
+          (getAttributes hostname (into-array [type]))
+          (get type))
+      (catch NamingException _
+        nil))))
+
+#+clj
+(defpredicate valid-email-domain?
+  "Returns true if the domain of the supplied email address has a MX DNS entry."
+  [email]
+  [email-address?]
+  (if-let [domain (second (re-matches #".*@(.*)" email))]
+    (boolean (dns-lookup domain "MX"))))
 

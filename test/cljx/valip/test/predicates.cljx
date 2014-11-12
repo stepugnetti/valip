@@ -2,13 +2,11 @@
   #+cljs(:require-macros [cemerick.cljs.test :refer [deftest is]])
   (:require [valip.predicates
              :refer [present? matches max-length min-length
-                     email-address? digits? integer-string?
+                     email-address? #+clj valid-email-domain? digits? integer-string?
                      decimal-string? gt gte lt lte over under
-                     at-least at-most between]]
+                     at-least at-most between url?]]
        #+clj[clojure.test :refer :all]
-      #+cljs[cemerick.cljs.test :as t])
-;;         valip.java.predicates)
-  )
+      #+cljs[cemerick.cljs.test :as t]))
 
 (deftest test-present?
   (is (not (present? nil)))
@@ -41,17 +39,18 @@
   (is (not (email-address? "foo bar@example.com")))
   (is (not (email-address? "foo@foo_bar.com"))))
 
-;; (deftest test-valid-email-domain?
-;;   (is (valid-email-domain? "example@google.com"))
-;;   (is (not (valid-email-domain? "foo@example.com")))
-;;   (is (not (valid-email-domain? "foo@google.com.nospam")))
-;;   (is (not (valid-email-domain? "foo"))))
+#+clj
+(deftest test-valid-email-domain?
+  (is (valid-email-domain? "example@google.com"))
+  (is (not (valid-email-domain? "foo@example.com")))
+  (is (not (valid-email-domain? "foo@google.com.nospam")))
+  (is (not (valid-email-domain? "foo"))))
 
-;; (deftest test-url?
-;;   (is (url? "http://google.com"))
-;;   (is (url? "http://foo"))
-;;   (is (not (url? "foobar")))
-;;   (is (not (url? ""))))
+(deftest test-url?
+  (is (url? "http://google.com"))
+  (is (url? "http://foo"))
+  (is (not (url? "foobar")))
+  (is (not (url? ""))))
 
 (deftest test-digits?
   (is (digits? "01234"))
