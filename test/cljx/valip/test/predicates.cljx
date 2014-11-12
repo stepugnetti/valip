@@ -50,7 +50,8 @@
   (is (url? "http://google.com"))
   (is (url? "http://foo"))
   (is (not (url? "foobar")))
-  (is (not (url? ""))))
+  (is (not (url? "")))
+  (is (not (url? "mailto://"))))
 
 (deftest test-digits?
   (is (digits? "01234"))

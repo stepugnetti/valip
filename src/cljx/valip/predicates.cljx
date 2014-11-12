@@ -136,12 +136,18 @@ Clojure implementations."
     (catch URISyntaxException _ false)))
 
 #+cljs
+(defn- spy [o]
+  (.log js/console o)
+  o)
+
+
+#+cljs
 (defn url?
   [s]
   (let [uri (-> s goog.Uri/parse)
         scheme (.getScheme uri)]
     (and (seq scheme)
-         (seq (-> uri .toString (.slice (.-length scheme) -1)))
+         (seq (second (re-matches (js/RegExp (str scheme ":(.*)")) (.toString uri))))
          (re-find #"//" s))))
 
 #+clj

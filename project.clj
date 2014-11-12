@@ -14,7 +14,7 @@
   :cljsbuild {:builds [{:source-paths ["target/cljs"]
                         :compiler {:output-dir "target/classes"
                                    :output-to "target/classes/valip.js"
-                                   :optimizations :none
+                                   :optimizations :advanced
                                    :pretty-print false}}]}
   :source-paths ["target/clj" "src/clj" "target/cljs" "src/cljs"]
   :profiles {:dev {:dependencies [[com.cemerick/clojurescript.test "0.3.1"]]
@@ -32,7 +32,7 @@
                    :cljsbuild {:builds [{:source-paths ["target/test/cljs"]
                                          :compiler {:output-dir "target/test-classes"
                                                     :output-to "target/test-classes/test_valip.js"
-                                                    :optimization "none"
+                                                    :optimization :advanced
                                                     :pretty-print false}}]
 
                                :test-commands {"unit-tests" ["phantomjs" :runner "target/test-classes/test_valip.js"]}}}})
