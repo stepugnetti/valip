@@ -1,6 +1,6 @@
-(defproject com.cemerick/valip "0.3.2"
+(defproject org.clojars.stepugnetti/valip "0.4.0"
   :description "Functional validation library for Clojure and ClojureScript, forked from https://github.com/weavejester/valip"
-  :url "http://github.com/cemerick/valip"
+  :url "http://github.com/stepugnetti/valip"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-2371"]]
   :plugins [[com.keminglabs/cljx "0.4.0"]]
@@ -35,4 +35,5 @@
                                                     :optimization :advanced
                                                     :pretty-print false}}]
 
-                               :test-commands {"unit-tests" ["phantomjs" :runner "target/test-classes/test_valip.js"]}}}})
+                               :test-commands {"unit-tests" ["phantomjs" :runner "target/test-classes/test_valip.js"]}}}}
+  :jar-exclusions [#".*\.js|project\.clj"])
