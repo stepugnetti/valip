@@ -1,6 +1,8 @@
-(defproject org.clojars.stepugnetti/valip "0.4.0"
-  :description "Functional validation library for Clojure and ClojureScript, forked from https://github.com/weavejester/valip"
+(defproject org.clojars.stepugnetti/valip "0.4.0-SNAPSHOT"
+  :description "Functional validation library for Clojure and ClojureScript, forked from https://github.com/cemerick/valip"
   :url "http://github.com/stepugnetti/valip"
+  :license {:name "Eclipse Public License"
+            :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-2371"]]
   :plugins [[com.keminglabs/cljx "0.4.0"]]
@@ -36,4 +38,5 @@
                                                     :pretty-print false}}]
 
                                :test-commands {"unit-tests" ["phantomjs" :runner "target/test-classes/test_valip.js"]}}}}
-  :jar-exclusions [#".*\.js|project\.clj"])
+  :jar-exclusions [#".*\.js|project\.clj"]
+  :signing {:gpg-key ["<stefano.pugnetti@gmail.com>"]})
