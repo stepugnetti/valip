@@ -5,14 +5,14 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-2371"]]
-  :plugins [[com.keminglabs/cljx "0.4.0"]]
-  :hooks [cljx.hooks]
+  :plugins [[com.keminglabs/cljx "0.5.0"]]
   :cljx {:builds [{:source-paths ["src/cljx"]
                    :output-path "target/clj"
                    :rules :clj}
                   {:source-paths ["src/cljx"]
                    :output-path "target/cljs"
                    :rules :cljs}]}
+  :prep-tasks [["cljx" "once"]]
   :cljsbuild {:builds [{:source-paths ["target/cljs"]
                         :compiler {:output-dir "target/classes"
                                    :output-to "target/classes/valip.js"

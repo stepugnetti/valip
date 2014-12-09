@@ -4,3 +4,5 @@ lib
 classes
 
 target
+.lein-env
+.lein-failures
